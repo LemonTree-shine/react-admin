@@ -18,7 +18,7 @@ const data = [{
     key:'2',
     children:[{
         title:'2-1',
-        link:'/info',
+        link:'/index',
         key:'2-1',
         children:[]
     }]
