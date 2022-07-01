@@ -8,7 +8,7 @@ const { SubMenu } = Menu;
 const data = [{
     title:'Navigation One',
     icon:<MailOutlined />,
-    link:'/a',
+    link:'/query',
     key:'1',
     children:[],
 },{

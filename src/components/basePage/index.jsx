@@ -12,6 +12,9 @@ function BasePage(props, ref) {
         onSubmit,
         onFormChanges,
         tableData={},
+        initLoad=false,
+        showReset=false,
+        extraBtns = []
     } = props;
 
     const [form] = Form.useForm();
@@ -37,6 +40,12 @@ function BasePage(props, ref) {
         },resetTableData);
     },[formParams]);
 
+    useEffect(()=>{
+        if(initLoad){
+            form.submit();
+        }
+    },[])
+
     //父组件能获取到的子组件方法
     useImperativeHandle(ref, () => {
         return {
@@ -53,7 +62,14 @@ function BasePage(props, ref) {
                     DOM = <Input placeholder={item.placeholder} />;
                     break;
                 case 'select':
-                    DOM = <Select mode={item.mode || ''} placeholder={item.placeholder}>
+                    DOM = <Select 
+                        // {...item}
+                        mode={item.mode || ''} 
+                        placeholder={item.placeholder} 
+                        showSearch={item.showSearch || false}
+                        optionFilterProp="children"
+                    >
+                        {item.showAll?<Select.Option value=''>全部</Select.Option>:""}
                         {item.options && item.options.map((sl) => {
                             return <Select.Option key={sl.value} value={sl.value}>{sl.label}</Select.Option>
                         })}
@@ -105,6 +121,10 @@ function BasePage(props, ref) {
         setTotal(data.total || 0);
     }
 
+    const reset = ()=>{
+        form.resetFields();
+    }
+
     return <div className='base-page-template-wrap'>
         <div className='base-form-wrap'>
             <Form
@@ -117,6 +137,10 @@ function BasePage(props, ref) {
                 </Row>
                 <div style={{ textAlign: 'left' }}>
                     <Button type="primary" htmlType="submit">Query</Button>
+                    {showReset?<Button className="ml_6" type="primary" onClick={reset}>Reset</Button>:""}
+                    {extraBtns.map((item)=>{
+                        return <Button className="ml_6" type="primary" key={item.name} onClick={item.onClick}>{item.name}</Button>
+                    })}
                 </div>
             </Form>
         </div>

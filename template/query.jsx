@@ -1,8 +1,6 @@
 import BasePage from '@/components/basePage/index';
 import moment from 'moment';
 import {useState,useEffect,useRef} from 'react';
-import { Button,Form,Input } from 'antd';
-import BaseModal from "@/components/baseDialog/index";
 
 export default function(){
 
@@ -40,16 +38,6 @@ export default function(){
 
     const columns = [
         {
-            title: '操作',
-            dataIndex: 'operate',
-            key: 'operate',
-            render(text,item){
-                return <Button type='link' onClick={()=>{
-                    setModalVisible(true);
-                }}>add</Button>
-            }
-        },
-        {
             title: '姓名',
             dataIndex: 'name',
             key: 'name',
@@ -69,12 +57,8 @@ export default function(){
 
     const [formData,setFormData] = useState(data);
     const baseRef = useRef();
-    const [modalVisible,setModalVisible] = useState(false)
 
     useEffect(()=>{
-        //加载页面请求数据
-        //baseRef.current.form.submit();
-
         setTimeout(() => {
             setFormData(formData.map((item)=>{
                 if(item.name==='country'){
@@ -97,12 +81,6 @@ export default function(){
             formData={formData}
             initLoad={false}  //是否默认加载数据，默认是false
             showReset={false} //是否显示reset按钮，默认是false
-            extraBtns={[{     //额外的操作按钮
-                name:'test',
-                onClick:()=>{
-                    alert(123)
-                }
-            }]}
             onSubmit={(values,callback)=>{  //请求接口获取数据，把数据给到组件内部做数据重新渲染
                 console.log(values);
                 setTimeout(() => {
@@ -131,30 +109,6 @@ export default function(){
                 columns,
             }}
         />
-        <BaseModal 
-            title="测试标题"
-            visible={modalVisible}
-            onOk={(values)=>{
-                console.log(values);
-                setModalVisible(false)
-            }}
-            onCancel={()=>{
-                setModalVisible(false)
-            }}
-        >
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Username2"
-            >
-                12313
-            </Form.Item>
-        </BaseModal>
     </div>
     
 }
