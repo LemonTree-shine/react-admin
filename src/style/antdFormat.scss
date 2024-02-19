@@ -4,3 +4,23 @@
 .ant-table-tbody > tr > td{
     padding: 8px;
 }
+
+.c-input-format{
+    position: relative;
+    .placeholder{
+        position: absolute;
+        top: 3px;
+        left: 10px;
+        z-index: 1;
+        color: #ccc;
+    }
+    .placeholder-center{
+        top: 14px;
+        left: 16px;
+    }
+    .ant-input{
+        height: 50px;
+        padding-top: 15px;
+        padding-bottom: 0;
+    }   
+}

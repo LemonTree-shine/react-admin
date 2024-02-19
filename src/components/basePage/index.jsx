@@ -136,8 +136,8 @@ function BasePage(props, ref) {
                     {renderForm()}
                 </Row>
                 <div style={{ textAlign: 'left' }}>
-                    <Button type="primary" htmlType="submit">Query</Button>
-                    {showReset?<Button className="ml_6" type="primary" onClick={reset}>Reset</Button>:""}
+                    <Button type="primary" htmlType="submit">查询</Button>
+                    {showReset?<Button className="ml_6" type="primary" onClick={reset}>重置</Button>:""}
                     {extraBtns.map((item)=>{
                         return <Button className="ml_6" type="primary" key={item.name} onClick={item.onClick}>{item.name}</Button>
                     })}

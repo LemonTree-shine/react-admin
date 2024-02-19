@@ -14,7 +14,7 @@ import './style/global.scss';
 
 import BaseAdmin from "@/components/adminBase/index";
 import routeConfig from "@/route/config";
-
+import EmptyPage from '@/page/404';
 const history = createBrowserHistory();
 
 function App() {
@@ -25,9 +25,11 @@ function App() {
 					<Suspense fallback={<div>Loading...</div>}>
 						<Routes>
 							{routeConfig.map((item)=>{
-								return <Route path={item.path} element={<item.component/>} />
+								return <Route path={item.path} key={item.path} element={<item.component/>} />
 							})}
-							<Route path="*" element={<div>404</div>} />
+
+							<Route path="*" element={<EmptyPage/>} />
+
 						</Routes>
 					</Suspense>
 				</BaseAdmin>
