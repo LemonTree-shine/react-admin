@@ -16,38 +16,48 @@ export default function(){
 
     const [refForm] = Form.useForm();
 
-    const data = [{
-        label:'userName',
-        name:'userName',
-        type:'input',
-        initialValue:'',
-        placeholder:"请输入userName",
-        rules:[]
-    },{
-        label:'country',
-        name:'country',
-        type:'select',
-        initialValue:'',
-        showSearch:true,
-        showAll:true,
-        //mode:'multiple',
-        rules:[],
-        options:UTILS.formatOptions(countryMap,'key','name')
-    },{
-        label:'Application Time',
-        name:'startTime',
-        type:'datePick',
-        initialValue:moment().startOf('day'),
-        //showTime:true,
-        rules:[]
-    },{
-        label:'Application Time',
-        name:'rangeTime',
-        type:'rangePick',
-        //showTime:true,
-        initialValue:[moment().startOf('day'),moment().endOf('day')],
-        rules:[]
-    }];
+    const data = [
+        {
+            label:'业务域',
+            name:'scope',
+            type:'input',
+            initialValue:'',
+            placeholder:"",
+            rules:[]
+        }
+        // {
+        //     label:'userName',
+        //     name:'userName',
+        //     type:'input',
+        //     initialValue:'',
+        //     placeholder:"请输入userName",
+        //     rules:[]
+        // },{
+        //     label:'country',
+        //     name:'country',
+        //     type:'select',
+        //     initialValue:'',
+        //     showSearch:true,
+        //     showAll:true,
+        //     //mode:'multiple',
+        //     rules:[],
+        //     options:UTILS.formatOptions(countryMap,'key','name')
+        // },{
+        //     label:'Application Time',
+        //     name:'startTime',
+        //     type:'datePick',
+        //     initialValue:moment().startOf('day'),
+        //     //showTime:true,
+        //     rules:[]
+        // },{
+        //     label:'Application Time',
+        //     name:'rangeTime',
+        //     type:'rangePick',
+        //     //showTime:true,
+        //     initialValue:[moment().startOf('day'),moment().endOf('day')],
+        //     rules:[]
+        // }
+    ];
 
     const columns = [
         {

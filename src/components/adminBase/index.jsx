@@ -50,11 +50,20 @@ export default function Index(props){
 
     const overlay = (
         <Menu>
-          <Menu.Item className="admin-overlay-item" key="signOut">
+          <Menu.Item className="admin-overlay-item" key="signOut" onClick={()=>{
+            window.location.href = '/login';
+          }}>
             Sign Out
           </Menu.Item>
         </Menu>
     );
+
+    //判断是否是登录页面
+    if(currentPath==='/login'){
+        return <div className='admin-base-login-wrap'>
+            {children}
+        </div>
+    }
 
     return <div className='admin-base-layout'>
         <header className='admin-base-header'>

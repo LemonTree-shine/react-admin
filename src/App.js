@@ -9,7 +9,7 @@ import {
 	Link,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import './style/global.scss';
 
 import BaseAdmin from "@/components/adminBase/index";

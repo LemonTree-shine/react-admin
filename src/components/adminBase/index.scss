@@ -62,10 +62,16 @@ body{
     .admin-base-content-wrap{
         margin-left: 270px;
         padding: 20px;
-        padding-top: 60px;
+        padding-top: 80px;
     }
 }
 .admin-overlay-item{
     min-width: 200px;
     text-align: left;
+}
+
+
+.admin-base-login-wrap{
+    height: 100vh;
+    background: #e3e3e3;
 }

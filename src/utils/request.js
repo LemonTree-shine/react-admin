@@ -7,6 +7,7 @@ const baseUrl = "http://localhost:3000";
 axios.interceptors.request.use((config)=>{
     //设置请求头
     config.headers.post['Content-Type'] = 'application/json';
+    config.withCredentials = true;
 
     return config;
 },(error)=>{
@@ -30,9 +31,15 @@ const request = {
                     resolve(res.data);
                 }else{
                     if(!options.jumpError){
-                        message.error(res?.data?.message)
+                        message.error({
+                            content:res?.data?.message
+                        })
                     }
-                    reject(res.data)
+                    //登录超时，跳转到登录页面
+                    if(res.data.code==="111111"){
+                        window.location.href = '/login';
+                    }
+                    reject(res?.data)
                 }
             }).catch((error)=>{
                 reject(error)
