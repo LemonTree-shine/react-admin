@@ -1,66 +1,43 @@
 import BasePage from '@/components/basePage/index';
 import moment from 'moment';
 import { useState, useEffect, useRef, useId } from 'react';
-import { queryBaseInfo, deleteBaseInfo, updateBaseInfo } from "@/api/index";
+import { queryParams, deleteParams, updateParams } from "@/api/index";
 import UTILS from "@/utils/index";
 import { Button, Modal, message, Form, Input } from 'antd';
+import JsonSchema from "@/components/jsonSchema/index";
+
+
+
+
 import Tucky from 'tucky';
 
-const countryMap = {
-    CN: '中国',
-    US: '美国'
-}
-
 export default function () {
-    const [currenctData, setCurrenctData] = useState({});
-    const [showModal, setShowModal] = useState(false);
-
-    const [refForm] = Form.useForm();
-
-    const { state, dispatch } = Tucky.useTucky();
 
     const data = [
         {
             label: '编码',
-            name: 'scope',
+            name: 'code',
             type: 'input',
             initialValue: '',
             placeholder: "",
             rules: []
         }
-        // {
-        //     label:'userName',
-        //     name:'userName',
-        //     type:'input',
-        //     initialValue:'',
-        //     placeholder:"请输入userName",
-        //     rules:[]
-        // },{
-        //     label:'country',
-        //     name:'country',
-        //     type:'select',
-        //     initialValue:'',
-        //     showSearch:true,
-        //     showAll:true,
-        //     //mode:'multiple',
-        //     rules:[],
-        //     options:UTILS.formatOptions(countryMap,'key','name')
-        // },{
-        //     label:'Application Time',
-        //     name:'startTime',
-        //     type:'datePick',
-        //     initialValue:moment().startOf('day'),
-        //     //showTime:true,
-        //     rules:[]
-        // },{
-        //     label:'Application Time',
-        //     name:'rangeTime',
-        //     type:'rangePick',
-        //     //showTime:true,
-        //     initialValue:[moment().startOf('day'),moment().endOf('day')],
-        //     rules:[]
-        // }
     ];
+
+    const [currenctData, setCurrenctData] = useState({});
+    const [showModal, setShowModal] = useState(false);
+
+    const [formData, setFormData] = useState(data);
+    const baseRef = useRef();
+    const jsonRef = useRef();
+
+    const [refForm] = Form.useForm();
+
+    const { state, dispatch } = Tucky.useTucky();
+
+    const [jsonString, setJsonString] = useState('');
+
+
 
     const columns = [
         {
@@ -70,21 +47,19 @@ export default function () {
                 return <>
                     <Button type='link' onClick={() => {
                         refForm.setFieldsValue({
-                            content: item.content || '',
+                            name: item.name || '',
+                            code: item.code || '',
                             description: item.description || '',
-                            logo: item.logo || '',
-                            meta: item.meta || '',
-                            scope: item.scope || '',
-                            title: item.title || '',
                         })
                         setCurrenctData(item);
+                        setJsonString(item.jsonStr);
                         setShowModal(true)
                     }}>编辑</Button>
                     <Button type='link' onClick={() => {
                         Modal.confirm({
                             title: '确认要删除吗？',
                             onOk: () => {
-                                deleteBaseInfo({
+                                deleteParams({
                                     id: item.id
                                 }).then(() => {
                                     message.success('操作成功！')
@@ -98,14 +73,14 @@ export default function () {
             }
         },
         {
-            title: '单号',
-            dataIndex: 'id',
-            key: 'id',
+            title: '名称',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: '编码',
-            dataIndex: 'scope',
-            key: 'scope',
+            dataIndex: 'code',
+            key: 'code',
         },
         {
             title: '描述',
@@ -113,53 +88,49 @@ export default function () {
             key: 'description',
         },
         {
-            title: '图标',
-            dataIndex: 'logo',
-            key: 'logo',
-        },
-        {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-        },
-        {
-            title: '内容',
-            dataIndex: 'content',
-            key: 'content',
-        },
-        {
-            title: 'meta',
-            dataIndex: 'meta',
-            key: 'meta',
+            title: 'Json',
+            dataIndex: 'jsonStr',
+            key: 'jsonStr',
+            render(text, item) {
+                return <div className='w_600'>
+                    {text}
+                </div>
+            }
         },
 
     ];
 
 
-    const [formData, setFormData] = useState(data);
-    const baseRef = useRef();
+
 
     useEffect(() => { }, [])
 
     const handleSubmit = (value) => {
-        let params = {
-            content: value.content || '',
-            description: value.description || '',
-            logo: value.logo || '',
-            meta: value.meta || '',
-            scope: value.scope || '',
-            title: value.title || '',
-        }
-        if (currenctData.id) {
-            params.id = currenctData.id;
-        }
-        updateBaseInfo({
-            ...params
-        }).then((res) => {
-            message.success('操作成功！')
-            setShowModal(false);
-            baseRef.current.form.submit()
+        jsonRef.current.validate().then((res) => {
+            console.log(res)
+            if (res.length) {
+                message.error('JSON格式有错误!')
+            } else {
+                let params = {
+                    name: value.name || '',
+                    code: value.code || '',
+                    description: value.description || '',
+                    jsonStr: jsonRef.current.getValue(),
+                }
+                if (currenctData.id) {
+                    params.id = currenctData.id;
+                }
+                updateParams({
+                    ...params
+                }).then((res) => {
+                    message.success('操作成功！')
+                    setShowModal(false);
+                    baseRef.current.form.submit()
+                })
+            }
         })
+
+
     }
 
     return <div>
@@ -173,27 +144,25 @@ export default function () {
                     name: '添加',
                     onClick: () => {
                         refForm.setFieldsValue({
-                            content: '',
+                            name: '',
+                            code: '',
                             description: '',
-                            logo: '',
-                            meta: '',
-                            scope: '',
-                            title: '',
                         })
                         setCurrenctData({});
+                        setJsonString('{}');
                         setShowModal(true);
                     }
                 }
             ]}
             onSubmit={(values, callback) => {  //请求接口获取数据，把数据给到组件内部做数据重新渲染
                 console.log(values);
-                queryBaseInfo({
+                queryParams({
                     ...values
                 }).then((res) => {
                     //正常业务流程
                     callback({
                         dataSource: res?.data?.list || [],
-                        total: res?.data?.list.length || 0
+                        total: res?.data?.total || 0
                     });
                 }).catch((res) => {
                     //异常处理
@@ -213,8 +182,8 @@ export default function () {
         />
         {showModal ? <Modal
             visible={showModal}
-            title={`${currenctData.id ? '编辑基本信息' : '添加基本信息'}`}
-            width={600}
+            title={`${currenctData.id ? '编辑自定义参数' : '添加自定义参数'}`}
+            width={1200}
             onCancel={() => {
                 setShowModal(false);
             }}
@@ -234,25 +203,20 @@ export default function () {
                 }}
                 onFinish={handleSubmit}
             >
-                <Form.Item label="编码" name="scope">
-                    <Input disabled={currenctData.id} />
+                <Form.Item label="名称" name="name">
+                    <Input style={{ width: '300px' }} />
                 </Form.Item>
-                <Form.Item label="标题" name="title">
-                    <Input />
-                </Form.Item>
-                <Form.Item label="图标" name="logo">
-                    <Input />
-                </Form.Item>
-                <Form.Item label="描述" name="description">
-                    <Input />
+                <Form.Item label="编码" name="code">
+                    <Input disabled={currenctData.id} style={{ width: '300px' }} />
                 </Form.Item>
 
-                <Form.Item label="Meta" name="meta">
-                    <Input />
+                <Form.Item label="描述" name="description">
+                    <Input style={{ width: '300px' }} />
                 </Form.Item>
-                <Form.Item label="内容" name="content">
-                    <Input.TextArea rows={6} />
+                <Form.Item label="Schema" name="description">
+                    <JsonSchema jsonString={jsonString} ref={jsonRef} />
                 </Form.Item>
+
             </Form>
         </Modal> : ''}
 

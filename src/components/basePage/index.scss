@@ -1,19 +1,24 @@
-.base-page-template-wrap{
+.base-page-template-wrap {
     background: #ffffff;
     padding: 20px 20px 30px;
     border-radius: 4px;
-    .base-form-wrap{
-        .form-col-item{
+    .base-form-wrap {
+        .form-col-item {
             padding-right: 30px;
             min-width: 250px;
-            .ant-form-item{
+            .ant-form-item {
                 display: block;
                 text-align: left;
                 font-weight: 700;
             }
         }
     }
-    .base-table-wrap{
+    .base-table-wrap {
         margin-top: 20px;
+    }
+    .ant-table-tbody {
+        .ant-table-cell {
+            padding: 8px !important;
+        }
     }
 }

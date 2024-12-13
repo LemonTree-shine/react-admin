@@ -1,7 +1,23 @@
 @import url("./antdFormat.scss");
 @import url("./margin.scss");
 
-.empty_page{
+.empty_page {
     padding-top: 20px;
     font-size: 40px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+}
+
+.w_200 {
+    width: 200px !important;
+}
+.w_400 {
+    width: 400px !important;
+}
+.w_600 {
+    width: 600px !important;
 }

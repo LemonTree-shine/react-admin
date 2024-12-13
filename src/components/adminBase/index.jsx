@@ -1,47 +1,52 @@
-import React,{useState,useEffect} from "react";
-import { Menu,Dropdown,Button } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Menu, Dropdown, Button } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './index.scss';
 const { SubMenu } = Menu;
 
-const data = [{
-    title:'Base Info',
-    icon:<MailOutlined />,
-    link:'/baseInfo',
-    key:'1',
-    children:[],
-},
-// {
-//     title:'Navigation Two',
-//     icon:<AppstoreOutlined />,
-//     link:'',
-//     key:'2',
-//     children:[{
-//         title:'2-1',
-//         link:'/index',
-//         key:'2-1',
-//         children:[]
-//     }]
-// }
+const data = [
+    {
+        title: 'Base Info',
+        icon: <MailOutlined />,
+        link: '/baseInfo',
+        key: '1',
+        children: [],
+    },
+    {
+        title: 'Params',
+        icon: <MailOutlined />,
+        link: '/params',
+        key: '2',
+        children: [],
+    },
+    {
+        title: 'Protocol',
+        icon: <MailOutlined />,
+        link: '/protocol',
+        key: '3',
+        children: [],
+    }
+
+
 ];
 
-export default function Index(props){
-    const {children} = props;
+export default function Index(props) {
+    const { children } = props;
     const navigate = useNavigate();
-    const [menuData,setMenuData] = useState(data); 
-    
+    const [menuData, setMenuData] = useState(data);
+
     const currentPath = window.location.pathname;
     const defaultKeys = [currentPath];
 
-    const renderMenu = (data)=>{
-        return data.map((item)=>{
-            if(item.children && item.children.length){
+    const renderMenu = (data) => {
+        return data.map((item) => {
+            if (item.children && item.children.length) {
                 return <SubMenu key={item.link} icon={item.icon || ''} title={item.title}>
                     {renderMenu(item.children)}
                 </SubMenu>;
-            }else{
-                return <Menu.Item key={item.link} icon={item.icon || ''} onClick={()=>{
+            } else {
+                return <Menu.Item key={item.link} icon={item.icon || ''} onClick={() => {
                     navigate(item.link)
                 }}>{item.title}</Menu.Item>
             }
@@ -50,16 +55,16 @@ export default function Index(props){
 
     const overlay = (
         <Menu>
-          <Menu.Item className="admin-overlay-item" key="signOut" onClick={()=>{
-            window.location.href = '/login';
-          }}>
-            Sign Out
-          </Menu.Item>
+            <Menu.Item className="admin-overlay-item" key="signOut" onClick={() => {
+                window.location.href = '/login';
+            }}>
+                Sign Out
+            </Menu.Item>
         </Menu>
     );
 
     //判断是否是登录页面
-    if(currentPath==='/login'){
+    if (currentPath === '/login') {
         return <div className='admin-base-login-wrap'>
             {children}
         </div>
@@ -76,7 +81,7 @@ export default function Index(props){
         </header>
         <div className='admin-base-left-menu'>
             <div className="admin-base-menu-scroll-wrap">
-                <Menu 
+                <Menu
                     mode="inline"
                     defaultSelectedKeys={defaultKeys}
                 >
