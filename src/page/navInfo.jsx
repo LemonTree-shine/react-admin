@@ -1,7 +1,7 @@
 import BasePage from '@/components/basePage/index';
 import moment from 'moment';
 import { useState, useEffect, useRef, useId } from 'react';
-import { queryBaseInfo, deleteBaseInfo, updateBaseInfo } from "@/api/index";
+import { queryNavInfo, deleteBaseInfo, updateBaseInfo } from "@/api/index";
 import UTILS from "@/utils/index";
 import { Button, Modal, message, Form, Input } from 'antd';
 import Tucky from 'tucky';
@@ -28,38 +28,6 @@ export default function () {
             placeholder: "",
             rules: []
         }
-        // {
-        //     label:'userName',
-        //     name:'userName',
-        //     type:'input',
-        //     initialValue:'',
-        //     placeholder:"请输入userName",
-        //     rules:[]
-        // },{
-        //     label:'country',
-        //     name:'country',
-        //     type:'select',
-        //     initialValue:'',
-        //     showSearch:true,
-        //     showAll:true,
-        //     //mode:'multiple',
-        //     rules:[],
-        //     options:UTILS.formatOptions(countryMap,'key','name')
-        // },{
-        //     label:'Application Time',
-        //     name:'startTime',
-        //     type:'datePick',
-        //     initialValue:moment().startOf('day'),
-        //     //showTime:true,
-        //     rules:[]
-        // },{
-        //     label:'Application Time',
-        //     name:'rangeTime',
-        //     type:'rangePick',
-        //     //showTime:true,
-        //     initialValue:[moment().startOf('day'),moment().endOf('day')],
-        //     rules:[]
-        // }
     ];
 
     const columns = [
@@ -103,14 +71,14 @@ export default function () {
             key: 'id',
         },
         {
+            title: 'Parent ID',
+            dataIndex: 'pid',
+            key: 'pid',
+        },
+        {
             title: '编码',
             dataIndex: 'code',
             key: 'code',
-        },
-        {
-            title: '描述',
-            dataIndex: 'description',
-            key: 'description',
         },
         {
             title: '图标',
@@ -202,7 +170,7 @@ export default function () {
             ]}
             onSubmit={(values, callback) => {  //请求接口获取数据，把数据给到组件内部做数据重新渲染
                 console.log(values);
-                queryBaseInfo({
+                queryNavInfo({
                     ...values
                 }).then((res) => {
                     //正常业务流程

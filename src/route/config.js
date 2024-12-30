@@ -16,4 +16,8 @@ export default [
         path: '/protocol',
         component: lazy(() => import('@/page/protocol'))
     },
+    {
+        path: '/nav',
+        component: lazy(() => import('@/page/navInfo.jsx'))
+    },
 ]

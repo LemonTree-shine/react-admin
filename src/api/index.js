@@ -96,3 +96,14 @@ export function updateProtocol(params = {}) {
     })
 }
 
+
+
+export function queryNavInfo(params = {}) {
+    return request.post({
+        url: '/cms/queryNavInfo',
+        data: params,
+        //jumpError:true,
+        //loading:true
+    })
+}
+

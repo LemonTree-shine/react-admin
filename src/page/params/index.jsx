@@ -97,6 +97,21 @@ export default function () {
                 </div>
             }
         },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
+        },
+        {
+            title: '修改时间',
+            dataIndex: 'updateTime',
+            key: 'updateTime',
+        },
+        {
+            title: '操作人',
+            dataIndex: 'operator',
+            key: 'operator',
+        },
 
     ];
 

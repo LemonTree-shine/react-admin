@@ -6,22 +6,29 @@ import './index.scss';
 const { SubMenu } = Menu;
 
 const data = [
+    // {
+    //     title: '导航栏管理',
+    //     icon: <MailOutlined />,
+    //     link: '/nav',
+    //     key: '0',
+    //     children: [],
+    // },
     {
-        title: 'Base Info',
+        title: '基本信息管理',
         icon: <MailOutlined />,
         link: '/baseInfo',
         key: '1',
         children: [],
     },
     {
-        title: 'Params',
+        title: '自定义数据管理',
         icon: <MailOutlined />,
         link: '/params',
         key: '2',
         children: [],
     },
     {
-        title: 'Protocol',
+        title: '协议管理',
         icon: <MailOutlined />,
         link: '/protocol',
         key: '3',
